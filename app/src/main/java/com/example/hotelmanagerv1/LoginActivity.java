@@ -21,9 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     EditText Email, Password;
     Button logInButton;
-    TextView RegisterTV;
     FirebaseAuth fAuth;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         Email= findViewById(R.id.username);
         Password= findViewById(R.id.password);
         logInButton= findViewById(R.id.btnIniciar);
-        RegisterTV= findViewById(R.id.tvRegister);
 
         fAuth= FirebaseAuth.getInstance();
-        progressBar= findViewById(R.id.progressBarLogin);
+
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                progressBar.setVisibility(View.VISIBLE);
                 //Registrar al usuario
                 fAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -73,11 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-        RegisterTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
-            }
-        });
+
     }
 }
