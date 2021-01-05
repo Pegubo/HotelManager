@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Lavandería"
+            android:text="Historial del Pedidos"
             android:textSize="20sp" />
 
         <ImageView
@@ -66,46 +66,22 @@
 
     </LinearLayout>
 
-    <GridLayout
-        android:id="@+id/cardviews"
-        android:layout_below="@id/Linear_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:columnCount="4"
-        android:rowCount="4"
-        >
+    <LinearLayout
+        android:layout_below="@+id/Linear_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <ListView
+            android:id="@+id/lista_pedidos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"/>
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/icono_lavanderia"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
-                android:src="@drawable/ic_local_laundry" />
-
-            <TextView
-                android:id="@+id/titulo_lavanderia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Disponible de 8:00 am a  6:00 pm"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/btn_solicitar"
-                android:layout_marginTop="50dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Solicitar"
-                />
-        </LinearLayout>
-    </GridLayout>
 
 </RelativeLayout>

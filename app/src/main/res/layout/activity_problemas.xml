@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Lavandería"
+            android:text="Reportar un problema"
             android:textSize="20sp" />
 
         <ImageView
@@ -66,46 +66,38 @@
 
     </LinearLayout>
 
-    <GridLayout
-        android:id="@+id/cardviews"
-        android:layout_below="@id/Linear_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:columnCount="4"
-        android:rowCount="4"
-        >
-
         <LinearLayout
+            android:layout_below="@+id/Linear_subtitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/icono_lavanderia"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
-                android:src="@drawable/ic_local_laundry" />
-
             <TextView
-                android:id="@+id/titulo_lavanderia"
+                android:layout_marginTop="20dp"
+                android:id="@+id/titulo_Reporte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Disponible de 8:00 am a  6:00 pm"
+                android:text="Ingresa el problema que deseas reportar"
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
+            <EditText
+                android:id="@+id/problema_reportado"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:textSize="11sp"/>
+
             <Button
-                android:id="@+id/btn_solicitar"
+                android:id="@+id/btn_Enviar"
                 android:layout_marginTop="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Solicitar"
+                android:text="Enviar"
                 />
         </LinearLayout>
-    </GridLayout>
 
 </RelativeLayout>

@@ -17,6 +17,8 @@
         <activity android:name=".limpieza" />
         <activity android:name=".productos" />
         <activity android:name=".Nomolestar" />
+        <activity android:name=".historial" />
+        <activity android:name=".problemas" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
