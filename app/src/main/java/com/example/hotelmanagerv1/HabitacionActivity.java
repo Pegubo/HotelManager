@@ -56,6 +56,7 @@ public class HabitacionActivity extends AppCompatActivity {
 
                 for (DataSnapshot postSnapShot : snapshot.getChildren()){
                     HabitacionesClass habitacion = postSnapShot.getValue(HabitacionesClass.class);
+                    habitacion.setmKey(postSnapShot.getKey());
                     mHabitaciones.add(habitacion);
                 }
                 createTable();
@@ -81,39 +82,40 @@ public class HabitacionActivity extends AppCompatActivity {
                 TableRow row= new TableRow(this);
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
+                TextView pos = new TextView(this);
                 TextView numero = new TextView(this);
-                TextView contra = new TextView(this);
-                TextView huesped = new TextView(this);
-                TextView fSalida = new TextView(this);
-                TextView fInicio = new TextView(this);
                 CheckBox Reservada= new CheckBox(this);
                 Button btnSelect = new Button(this);
 
-
-                numero.setText("Habitacion"+habitacion.getNumero());
-                contra.setText(habitacion.getContra());
-                huesped.setText(habitacion.getHuesped());
+                //pos.setText(i);
+                numero.setText("Habitacion "+habitacion.getNumero());
                 Reservada.setText("Reservada");
                 Reservada.setChecked(habitacion.getReservada());
+                Reservada.setEnabled(false);
                 if(habitacion.getReservada()==true){
-                    fSalida.setText(habitacion.getfSalida());
-                    fInicio.setText(habitacion.getfInicio());
                     btnSelect.setText("Terminar");
+                    btnSelect.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(HabitacionActivity.this, "Terminar", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 else{
-                    fSalida.setText(habitacion.getfSalida());
-                    fInicio.setText(habitacion.getfInicio());
                     btnSelect.setText("Agregar Reservacion");
+                    btnSelect.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(HabitacionActivity.this, "Agregar", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
-
+                //row.addView(pos);
                 row.addView(numero);
-                row.addView(contra);
-                row.addView(huesped);
-                row.addView(fInicio);
-                row.addView(fSalida);
-                row.addView(btnSelect);
                 row.addView(Reservada);
+                row.addView(btnSelect);
+
                 tHabitaciones.addView(row,i);
                 i++;
             }

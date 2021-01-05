@@ -55,18 +55,32 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Registrar al usuario
-                fAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this,"Inicio de Sesion",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),AdminActivity.class));
-                        }else{
-                            Toast.makeText(LoginActivity.this,"Error al crear Usuario:" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                         }
-                    }
-                });
+                if(email.contains("@hotelmanager.com")){
+                    fAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(LoginActivity.this,"Inicio de Sesion",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }else{
+                                Toast.makeText(LoginActivity.this,"Error al crear Usuario:" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else{
+                    fAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(LoginActivity.this,"Inicio de Sesion",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),AdminActivity.class));
+                            }else{
+                                Toast.makeText(LoginActivity.this,"Error al crear Usuario:" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
             }
         });
 

@@ -10,6 +10,7 @@ public class HabitacionesClass {
     private String fSalida;
     private String mKey;
     private Boolean Reservada;
+    private String correo;
     public HabitacionesClass() {
 
     }
@@ -50,7 +51,7 @@ public class HabitacionesClass {
 
 
 
-    public String getmKey() {
+    public String getmKey(String key) {
         return mKey;
     }
 
@@ -80,5 +81,13 @@ public class HabitacionesClass {
 
     public void setfSalida(String fSalida) {
         this.fSalida = fSalida;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }
