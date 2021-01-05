@@ -38,32 +38,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
 
             case R.id.cv_Lavanderia:
-            i=new Intent(this,lavanderia.class);
+            i=new Intent(this, LavanderiaActivity.class);
             startActivity(i);
             break;
 
             case R.id.cv_Limpieza:
-                i=new Intent(this,limpieza.class);
+                i=new Intent(this, LimpiezaActivity.class);
                 startActivity(i);
                 break;
 
             case R.id.cv_Productos:
-                i=new Intent(this,productos.class);
+                i=new Intent(this, PedidosActivity.class);
                 startActivity(i);
                 break;
 
             case R.id.cv_noMolestar:
-                i=new Intent(this,Nomolestar.class);
+                i=new Intent(this, NomolestarActivity.class);
                 startActivity(i);
                 break;
 
             case R.id.cv_historial:
-                i=new Intent(this,historial.class);
+                i=new Intent(this, HistorialActivity.class);
                 startActivity(i);
                 break;
 
             case R.id.cv_problema:
-                i=new Intent(this,problemas.class);
+                i=new Intent(this, ReporteActivity.class);
                 startActivity(i);
                 break;
         }

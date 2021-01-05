@@ -130,8 +130,6 @@
             android:inputType="numberDecimal"
             android:textSize="11sp" />
 
-
-
         <androidx.cardview.widget.CardView
                 android:id="@+id/cv_toallas"
                 android:layout_width="80dp"
@@ -235,8 +233,6 @@
             android:inputType="numberDecimal"
             android:textSize="11sp" />
 
-
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_jabon"
                 android:layout_width="80dp"
@@ -299,6 +295,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_solicitar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
