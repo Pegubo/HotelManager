@@ -69,6 +69,7 @@
     </LinearLayout>
 
     <GridLayout
+        android:id="@+id/cardviews"
         android:layout_below="@id/Linear_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -307,6 +308,25 @@
         </androidx.cardview.widget.CardView>
 
     </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/Linear_footpage"
+        android:layout_below="@id/cardviews"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Cerrar Sesión"
+            android:onClick="logout"
+            />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
