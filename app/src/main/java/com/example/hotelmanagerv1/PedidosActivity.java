@@ -26,6 +26,7 @@ public class PedidosActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
     private List<PedidosClass> lst_pedidos;
+    private HabitacionesClass habitacionActual;
     private EditText et_almohadas, et_toallas, et_papel, et_jabon;
     private Button btn_solicitar;
 
@@ -34,15 +35,15 @@ public class PedidosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solicitar_productos);
 
-        et_almohadas=(EditText)findViewById(R.id.et_almohadas);
-        et_toallas=(EditText)findViewById(R.id.et_toallas);
-        et_papel=(EditText)findViewById(R.id.et_papel);
-        et_jabon=(EditText)findViewById(R.id.et_jabon);
+        et_almohadas = (EditText) findViewById(R.id.et_almohadas);
+        et_toallas = (EditText) findViewById(R.id.et_toallas);
+        et_papel = (EditText) findViewById(R.id.et_papel);
+        et_jabon = (EditText) findViewById(R.id.et_jabon);
 
-        btn_solicitar=(Button)findViewById(R.id.btn_solicitar);
+        btn_solicitar = (Button) findViewById(R.id.btn_solicitar);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("pedidos");
-        lst_pedidos= new ArrayList<>();
+        lst_pedidos = new ArrayList<>();
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -53,7 +54,7 @@ public class PedidosActivity extends AppCompatActivity {
                     pedidos.setKey(postSnapShot.getKey());
                     lst_pedidos.add(pedidos);
                 }
-                //createTable();
+                createTable();
             }
 
             @Override
@@ -62,6 +63,8 @@ public class PedidosActivity extends AppCompatActivity {
             }
         });
 
+    }
+
         private void createTable(){
             if(!lst_pedidos.isEmpty()){
                 int i=0;
@@ -69,48 +72,36 @@ public class PedidosActivity extends AppCompatActivity {
                     TableRow row= new TableRow(this);
                     TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                     row.setLayoutParams(lp);
-                    //esto es para crear los parametros de la tabla?
-                    TextView pos = new TextView(this);
-                    TextView numero = new TextView(this);
-                    CheckBox Reservada= new CheckBox(this);
-                    Button btnSelect = new Button(this);
+                    //esto es para crear los parametros de la tabla
 
-                    //esto es para llenar los parametros anteriores?
+                    TextView habitacion = new TextView(this);
+                    TextView almohadas= new TextView(this);
+                    TextView toallas= new TextView(this);
+                    TextView papel= new TextView(this);
+                    TextView jabon= new TextView(this);
+                    CheckBox completado=new CheckBox(this);
+
+
+                    //esto es para llenar los parametros anteriores
                     //pos.setText(i);
-                    numero.setText("Habitacion "+habitacion.getNumero());
-                    Reservada.setText("Reservada");
-                    Reservada.setChecked(habitacion.getReservada());
-                    Reservada.setEnabled(false);
-                    if(habitacion.getReservada()==true){
-                        btnSelect.setText("Terminar");
-                        btnSelect.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(HabitacionActivity.this, "Terminar", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else{
-                        btnSelect.setText("Agregar Reservacion");
-                        btnSelect.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(HabitacionActivity.this, "Agregar", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+                    //habitacion.setText("Habitacion "+habitacion.getNumero()); obtener la habitacion desde la base de datos
 
-                    //row.addView(pos);
-                    row.addView(numero);
-                    row.addView(Reservada);
-                    row.addView(btnSelect);
+                    almohadas.setText(et_almohadas.getText());
+                    toallas.setText(et_toallas.getText());
+                    papel.setText(et_papel.getText());
+                    jabon.setText(et_jabon.getText());
+                    completado.setChecked(false);
 
-                    tHabitaciones.addView(row,i);
-                    i++;
+                    row.addView(almohadas);
+                    row.addView(toallas);
+                    row.addView(papel);
+                    row.addView(jabon);
+                    row.addView(completado);
+
                 }
             }
             else{
-                Toast.makeText(this, "No hay habitaciones disponibles para mostrar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No se pudo realizar el pedido", Toast.LENGTH_SHORT).show();
             }
 
     }
