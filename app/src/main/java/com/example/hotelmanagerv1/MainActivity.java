@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public CardView lavadora,limpieza,productos;
+    public CardView lavadora,limpieza,productos,nomolestar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +19,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lavadora=(CardView)findViewById(R.id.cv_Lavanderia);
         limpieza=(CardView)findViewById(R.id.cv_Limpieza);
         productos=(CardView)findViewById(R.id.cv_Productos);
+        nomolestar=(CardView)findViewById(R.id.cv_noMolestar);
 
         lavadora.setOnClickListener(this);
         limpieza.setOnClickListener(this);
         productos.setOnClickListener(this);
+        nomolestar.setOnClickListener(this);
     }
 
     @Override
@@ -43,6 +45,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_Productos:
                 i=new Intent(this,productos.class);
+                startActivity(i);
+                break;
+
+            case R.id.cv_noMolestar:
+                i=new Intent(this,Nomolestar.class);
                 startActivity(i);
                 break;
         }

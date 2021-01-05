@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <GridLayout
         android:id="@+id/grid_titulo"
@@ -54,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Lavandería"
+            android:text="No Molestar"
             android:textSize="20sp" />
 
         <ImageView
@@ -85,23 +84,24 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/icono_lavanderia"
-                android:layout_width="250dp"
+                android:id="@+id/icono_noMolestar"
+                android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/ic_local_laundry" />
+                android:src="@drawable/ic_no_molestar_senal" />
 
             <TextView
-                android:id="@+id/titulo_lavanderia"
-                android:layout_width="wrap_content"
+                android:id="@+id/titulo_limpieza"
+                android:layout_marginTop="20dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="Disponible de 8:00 am hasta las 6:00 pm"
+                android:text="Al activar el modo No Molestar se pospondrá el servicio de limpieza hasta que desactive el modo o solicite algún servicio desde esta app"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textSize="18dp"/>
 
             <Button
                 android:id="@+id/btn_solicitar"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Solicitar"

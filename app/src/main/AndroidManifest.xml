@@ -13,6 +13,10 @@
         android:theme="@style/Theme.HotelManagerV1">
         <activity android:name=".FormularioActivity"></activity>
         <activity android:name=".HabitacionActivity" />
+        <activity android:name=".lavanderia" />
+        <activity android:name=".limpieza" />
+        <activity android:name=".productos" />
+        <activity android:name=".Nomolestar" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
