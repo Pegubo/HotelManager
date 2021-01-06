@@ -22,12 +22,14 @@ import java.util.List;
 
 public class HistorialActivity extends AppCompatActivity {
 
-    ListView lista_pedidos;
-    FirebaseDatabase database;
-    DatabaseReference ref;
-    ArrayList<PedidosClass> pedidos;
-    ArrayAdapter<PedidosClass> adapter;
-    PedidosClass pedido;
+    private FirebaseAuth mAuth;
+    private ListView lista_pedidos;
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    private ArrayList<String> pedidos;
+    private ArrayAdapter<String> adapter;
+    private PedidosClass pedido;
+    private HabitacionesClass nHabitacion;
 
 
     @Override
@@ -35,6 +37,7 @@ public class HistorialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
 
+        obtenerHabitacion();
         pedido=new PedidosClass();
         lista_pedidos=(ListView)findViewById(R.id.lista_pedidos);
         pedidos=new ArrayList<>();
@@ -48,7 +51,13 @@ public class HistorialActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapShot : snapshot.getChildren()){
                     pedido=postSnapShot.getValue(PedidosClass.class);
-                    pedidos.add(pedido);
+                    if(pedido.getHabitacion()==nHabitacion.getNumero()) {
+                        pedidos.add("Habitacion #" + Integer.toString(pedido.getHabitacion()) +
+                                "    Almohadas: " + Integer.toString(pedido.getAlmohadas()) +
+                                "    Toallas:   " + Integer.toString(pedido.getToallas()) +
+                                "    Papel:     " + Integer.toString(pedido.getPapel()) +
+                                "    Jabón      " + Integer.toString(pedido.getJabon()));
+                    }
                 }
                 lista_pedidos.setAdapter(adapter);
 
@@ -60,6 +69,38 @@ public class HistorialActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void obtenerHabitacion(){
+        DatabaseReference mDatabaseRef;
+        ValueEventListener mDBListener;
+        List<HabitacionesClass> mHabitaciones;
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
+        mHabitaciones= new ArrayList<>();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String email=currentUser.getEmail();
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot postSnapShot : snapshot.getChildren()){
+                    HabitacionesClass habitacion = postSnapShot.getValue(HabitacionesClass.class);
+                    habitacion.setmKey(postSnapShot.getKey());
+                    if(habitacion.getCorreo().equals(email)){
+                        nHabitacion=habitacion;
+                        Toast.makeText(HistorialActivity.this, "Habitacion Encontrada "+habitacion.getNumero(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistorialActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
