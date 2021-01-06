@@ -47,15 +47,6 @@ public class FormularioActivity extends AppCompatActivity {
 
         fAuth= FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
-        /*if(cbReservada.isChecked()){
-            etfSalida.setEnabled(true);
-            etfInicio.setEnabled(true);
-            etHuesped.setEnabled(true);
-        }else{
-            etfSalida.setEnabled(false);
-            etfInicio.setEnabled(false);
-            etHuesped.setEnabled(false);
-        }*/
 
         btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
