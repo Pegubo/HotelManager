@@ -3,10 +3,10 @@ package com.example.hotelmanagerv1;
 public class PedidosClass {
 
     private int habitacion;
-    private int almohadas;
-    private int toallas;
-    private int papel;
-    private int jabon;
+    private int almohadas=0;
+    private int toallas=0;
+    private int papel=0;
+    private int jabon=0;
     private boolean completado;
     private String Key;
 
