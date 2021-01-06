@@ -27,14 +27,12 @@ import java.util.List;
 
 public class PedidosActivity extends AppCompatActivity {
 
-    private FirebaseAuth fAuth;
+    private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
     private List<PedidosClass> lst_pedidos;
-    private HabitacionesClass habitacionActual;
     private EditText et_almohadas, et_toallas, et_papel, et_jabon;
     private Button btn_solicitar;
-    private FirebaseAuth mAuth;
     private HabitacionesClass nHabitacion;
 
     @Override
@@ -73,8 +71,9 @@ public class PedidosActivity extends AppCompatActivity {
                     HabitacionesClass habitacion = postSnapShot.getValue(HabitacionesClass.class);
                     habitacion.setmKey(postSnapShot.getKey());
                     if(habitacion.getCorreo().equals(email)){
-                        Toast.makeText(PedidosActivity.this, "Habitacion Encontrada", Toast.LENGTH_SHORT).show();
                         nHabitacion=habitacion;
+                        Toast.makeText(PedidosActivity.this, "Habitacion Encontrada "+habitacion.getNumero(), Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
@@ -95,17 +94,15 @@ public class PedidosActivity extends AppCompatActivity {
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
                 //esto es para crear los parametros de la tabla
-                //TextView habitacion = new TextView(this);
+                TextView habitacion = new TextView(this);
                 TextView almohadas= new TextView(this);
                 TextView toallas= new TextView(this);
                 TextView papel= new TextView(this);
                 TextView jabon= new TextView(this);
                 CheckBox completado=new CheckBox(this);
 
-                //esto es para llenar los parametros anteriores
-                //pos.setText(i);
-                //habitacion.setText("Habitacion "+habitacion.getNumero()); obtener la habitacion desde la base de datos
 
+                habitacion.setText(nHabitacion.getNumero());
                 almohadas.setText(et_almohadas.getText());
                 toallas.setText(et_toallas.getText());
                 papel.setText(et_papel.getText());
@@ -126,7 +123,7 @@ public class PedidosActivity extends AppCompatActivity {
     }
 
     private void hacerPedido(){
-        PedidosClass NuevoPedido=new PedidosClass(1,Integer.parseInt(et_almohadas.getText().toString()),
+        PedidosClass NuevoPedido=new PedidosClass(nHabitacion.getNumero(),Integer.parseInt(et_almohadas.getText().toString()),
                 Integer.parseInt(et_toallas.getText().toString()),
                 Integer.parseInt(et_papel.getText().toString()),
                 Integer.parseInt(et_jabon.getText().toString()),false);
@@ -134,7 +131,7 @@ public class PedidosActivity extends AppCompatActivity {
         mDatabaseRef.push().setValue(NuevoPedido).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(PedidosActivity.this, "Pedido Realizado", Toast.LENGTH_LONG).show();
+                Toast.makeText(PedidosActivity.this, "Pedido Realizado para la habitación # "+ nHabitacion.getNumero(), Toast.LENGTH_LONG).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
