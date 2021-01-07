@@ -112,20 +112,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
     private void obtenerHabitacion(){
         ValueEventListener mDBListener;
-        List<HabitacionesClass> mHabitaciones;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
-        mHabitaciones= new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String email=currentUser.getEmail();
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        readData(mDatabaseRef, new NotificacionesActivity.OnGetDataListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot postSnapShot : snapshot.getChildren()){
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapShot : dataSnapshot.getChildren()){
                     HabitacionesClass habitacion = postSnapShot.getValue(HabitacionesClass.class);
                     habitacion.setmKey(postSnapShot.getKey());
                     if(habitacion.getCorreo().equals(email)){
@@ -135,39 +131,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             }
+            @Override
+            public void onStart() {
+                //whatever you need to do onStart
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure() {
+
             }
         });
-
     }
-
     private void obtenerServicio(){
 
         ValueEventListener mDBListener;
-        List<ServiciosClass> lst_servicio;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("servicios");
-        lst_servicio= new ArrayList<>();
-
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        readData(mDatabaseRef, new NotificacionesActivity.OnGetDataListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot postSnapShot : snapshot.getChildren()){
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapShot : dataSnapshot.getChildren()){
                     ServiciosClass servicio = postSnapShot.getValue(ServiciosClass.class);
                     servicio.setKey(postSnapShot.getKey());
                     if(nHabitacion.getNumero()==servicio.getHabitacion()){
-                      serviciosDisponibles=servicio;
+                        serviciosDisponibles=servicio;
                         //Toast.makeText(MainActivity.this, "SI SE PUDO RAZA", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+            @Override
+            public void onStart() {
+                //whatever you need to do onStart
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure() {
+
             }
         });
 
@@ -177,5 +175,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         finish();
+    }
+    public interface OnGetDataListener {
+        //make new interface for call back
+        void onSuccess(DataSnapshot dataSnapshot);
+        void onStart();
+        void onFailure();
+    }
+    public void readData(DatabaseReference ref, final NotificacionesActivity.OnGetDataListener listener) {
+        listener.onStart();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure();
+            }
+        });
+
     }
 }
