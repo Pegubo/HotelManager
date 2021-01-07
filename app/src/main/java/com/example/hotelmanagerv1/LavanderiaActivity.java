@@ -59,8 +59,10 @@ public class LavanderiaActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Map<String, Object> servicioMap= new HashMap<>();
                             servicioMap.put("lavanderia",false);
-                            btn_solicitar.setText("Solicitar Servicio");
+                            servicioMap.put("limpieza",servicioDisponible.isLimpieza());
+                            servicioMap.put("no_molestar",servicioDisponible.isNo_molestar());
                             v.requestLayout();
+                            btn_solicitar.setText("Solicitar Servicio");
                             mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
 
                         }
@@ -73,8 +75,10 @@ public class LavanderiaActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Map<String, Object> servicioMap= new HashMap<>();
                             servicioMap.put("lavanderia",true);
-                            btn_solicitar.setText("Cancelar Servicio");
+                            servicioMap.put("limpieza",servicioDisponible.isLimpieza());
+                            servicioMap.put("no_molestar",false);
                             mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
+                            btn_solicitar.setText("Cancelar Servicio");
                             v.requestLayout();
                         }
                     });
@@ -87,7 +91,6 @@ public class LavanderiaActivity extends AppCompatActivity {
 
     private void crearServicio() {
         ServiciosClass servicioDisponible=new ServiciosClass(nHabitacion.getNumero(),false,true,false);
-
         mDatabaseRef.push().setValue(servicioDisponible).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -100,20 +103,6 @@ public class LavanderiaActivity extends AppCompatActivity {
                 Toast.makeText(LavanderiaActivity.this, "Fallo en la creacion: "+e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void cambiarServicio(){
-        Map<String, Object> servicioMap= new HashMap<>();
-
-
-            servicioMap.put("lavanderia",false);
-
-            btn_solicitar.setText("Cancelar Servicio");
-            servicioMap.put("lavanderia",true);
-
-
-        mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
-
     }
 
 }

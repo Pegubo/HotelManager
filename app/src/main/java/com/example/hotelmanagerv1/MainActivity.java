@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
 
+
+
             case R.id.cv_Lavanderia:
             i=new Intent(this, LavanderiaActivity.class);
             Bundle extras= new Bundle();
@@ -76,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_Limpieza:
                 i=new Intent(this, LimpiezaActivity.class);
+                Bundle extras1= new Bundle();
+                extras1.putSerializable("Servicio",serviciosDisponibles);
+                extras1.putSerializable("habitacion",nHabitacion);
+                i.putExtras(extras1);
                 startActivity(i);
                 break;
 
@@ -86,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_noMolestar:
                 i=new Intent(this, NomolestarActivity.class);
+                Bundle extra= new Bundle();
+                extra.putSerializable("Servicio",serviciosDisponibles);
+                extra.putSerializable("habitacion",nHabitacion);
+                i.putExtras(extra);
                 startActivity(i);
                 break;
 
@@ -120,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     habitacion.setmKey(postSnapShot.getKey());
                     if(habitacion.getCorreo().equals(email)){
                         nHabitacion=habitacion;
-                        Toast.makeText(MainActivity.this, "Habitacion Encontrada "+habitacion.getNumero(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Habitacion Encontrada "+habitacion.getNumero(), Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -150,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     servicio.setKey(postSnapShot.getKey());
                     if(nHabitacion.getNumero()==servicio.getHabitacion()){
                       serviciosDisponibles=servicio;
-                        Toast.makeText(MainActivity.this, "SI SE PUDO RAZA", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "SI SE PUDO RAZA", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
