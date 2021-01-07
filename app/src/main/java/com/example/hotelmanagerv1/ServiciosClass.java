@@ -1,11 +1,13 @@
 package com.example.hotelmanagerv1;
 
-public class ServiciosClass {
+import java.io.Serializable;
+
+public class ServiciosClass implements Serializable {
 
     private int habitacion;
-    private boolean limpieza=false;
-    private boolean lavanderia=false;
-    private boolean no_molestar=false;
+    private boolean limpieza;
+    private boolean lavanderia;
+    private boolean no_molestar;
 
     public ServiciosClass() {
     }

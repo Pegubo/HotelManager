@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
     private HabitacionesClass nHabitacion;
+    private ServiciosClass serviciosDisponibles;
     public CardView lavadora,limpieza,productos,nomolestar,historial,problema;
 
 
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         problema.setOnClickListener(this);
 
         obtenerHabitacion();
+        obtenerServicio();
+        //comprobar que la variable de servicio tenga la misma habitacion
 
     }
 
@@ -64,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_Lavanderia:
             i=new Intent(this, LavanderiaActivity.class);
+            Bundle extras= new Bundle();
+            extras.putSerializable("Servicio",serviciosDisponibles);
+            extras.putSerializable("habitacion",nHabitacion);
+            i.putExtras(extras);
             startActivity(i);
             break;
 
@@ -97,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void obtenerHabitacion(){
-
         ValueEventListener mDBListener;
         List<HabitacionesClass> mHabitaciones;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
@@ -116,6 +122,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         nHabitacion=habitacion;
                         Toast.makeText(MainActivity.this, "Habitacion Encontrada "+habitacion.getNumero(), Toast.LENGTH_SHORT).show();
 
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void obtenerServicio(){
+
+        ValueEventListener mDBListener;
+        List<ServiciosClass> lst_servicio;
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("servicios");
+        lst_servicio= new ArrayList<>();
+
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot postSnapShot : snapshot.getChildren()){
+                    ServiciosClass servicio = postSnapShot.getValue(ServiciosClass.class);
+                    servicio.setKey(postSnapShot.getKey());
+                    if(nHabitacion.getNumero()==servicio.getHabitacion()){
+                      serviciosDisponibles=servicio;
+                        Toast.makeText(MainActivity.this, "SI SE PUDO RAZA", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
