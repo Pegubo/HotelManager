@@ -1,8 +1,9 @@
 package com.example.hotelmanagerv1;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class HabitacionesClass {
+public class HabitacionesClass implements Serializable {
     private int numero;
     private String contra;
     private String Huesped;
@@ -52,7 +53,7 @@ public class HabitacionesClass {
 
 
 
-    public String getmKey(String key) {
+    public String getmKey() {
         return mKey;
     }
 

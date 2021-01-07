@@ -16,6 +16,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,8 @@ public class HabitacionActivity extends AppCompatActivity {
     private ValueEventListener mDBListener;
     private List<HabitacionesClass> mHabitaciones;
     private Button btnHabitacion;
+    private FirebaseAuth mAuth;
+    private HabitacionesClass nHabitacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,7 @@ public class HabitacionActivity extends AppCompatActivity {
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                mHabitaciones.clear();
                 for (DataSnapshot postSnapShot : snapshot.getChildren()){
                     HabitacionesClass habitacion = postSnapShot.getValue(HabitacionesClass.class);
                     habitacion.setmKey(postSnapShot.getKey());
@@ -99,6 +103,7 @@ public class HabitacionActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(HabitacionActivity.this, "Terminar", Toast.LENGTH_SHORT).show();
+                            terminarReservacion(habitacion);
                         }
                     });
                 }
@@ -108,6 +113,9 @@ public class HabitacionActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(HabitacionActivity.this, "Agregar", Toast.LENGTH_SHORT).show();
+
+                            agregarReservacion(habitacion);
+                            //mDatabaseRef.child(habitacion.getmKey()).updateChildren();
                         }
                     });
                 }
@@ -124,5 +132,23 @@ public class HabitacionActivity extends AppCompatActivity {
         else{
             Toast.makeText(this, "No hay habitaciones disponibles para mostrar", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void agregarReservacion(HabitacionesClass habitacion) {
+        Bundle extras= new Bundle();
+        extras.putString("Opcion","Agregar");
+        extras.putSerializable("habitacion",habitacion);
+        Intent intent= new Intent(this, ReservacionActivity.class);
+        intent.putExtras(extras);
+        startActivity(intent);
+    }
+
+    private void terminarReservacion(HabitacionesClass habitacion) {
+        Bundle extras= new Bundle();
+        extras.putString("Opcion","Eliminar");
+        extras.putSerializable("habitacion",habitacion);
+        Intent intent= new Intent(this, ReservacionActivity.class);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 }
