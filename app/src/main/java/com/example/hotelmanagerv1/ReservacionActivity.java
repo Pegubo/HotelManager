@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,7 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReservacionActivity extends AppCompatActivity {
     private EditText etNumero;
@@ -64,6 +67,35 @@ public class ReservacionActivity extends AppCompatActivity {
                 etNumero.setEnabled(false);
                 etContra.setText(habagregar.getContra().toString().trim());
                 etContra.setEnabled(false);
+                btnModificar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String huesped= etHuesped.toString().trim();
+                        String fInicio= etfInicio.toString().trim();
+                        String fSalida= etfSalida.toString().trim();
+                        if(TextUtils.isEmpty(huesped)){
+                            etHuesped.setError("Ingrese el Huesped.");
+                            return;
+                        }
+                        if(TextUtils.isEmpty(fInicio)){
+                            etfInicio.setError("Ingrese la Fecha de Inicio.");
+                            return;
+                        }
+                        if(TextUtils.isEmpty(fSalida)){
+                            etHuesped.setError("Ingrese la Fecha de Salida.");
+                            return;
+                        }
+                        Map<String, Object> habitacionMap= new HashMap<>();
+                        habitacionMap.put("contra",habagregar.getContra().toString());
+                        habitacionMap.put("correo",habagregar.getCorreo().toString());
+                        habitacionMap.put("fInicio",fInicio);
+                        habitacionMap.put("fSalida",fSalida);
+                        habitacionMap.put("huesped",huesped);
+                        habitacionMap.put("numero",habagregar.getNumero());
+                        habitacionMap.put("reservada",true);
+                        mDatabaseRef.child(habagregar.getmKey()).updateChildren(habitacionMap);
+                    }
+                });
             }
             if (datos.equals("Eliminar")){
                 btnEliminar.setVisibility(View.VISIBLE);
@@ -79,6 +111,20 @@ public class ReservacionActivity extends AppCompatActivity {
                 etfSalida.setEnabled(false);
                 cbReservada.setChecked(true);
                 cbReservada.setEnabled(false);
+                btnEliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Map<String, Object> habitacionMap= new HashMap<>();
+                        habitacionMap.put("contra",habagregar.getContra().toString());
+                        habitacionMap.put("correo",habagregar.getCorreo().toString());
+                        habitacionMap.put("fInicio","");
+                        habitacionMap.put("fSalida","");
+                        habitacionMap.put("huesped","");
+                        habitacionMap.put("numero",habagregar.getNumero());
+                        habitacionMap.put("reservada",false);
+                        mDatabaseRef.child(habagregar.getmKey()).updateChildren(habitacionMap);
+                    }
+                });
             }
         }
     }
