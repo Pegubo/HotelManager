@@ -1,6 +1,7 @@
 package com.example.hotelmanagerv1;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,8 +18,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FormularioActivity extends AppCompatActivity {
     private EditText etNumero;
@@ -27,15 +36,20 @@ public class FormularioActivity extends AppCompatActivity {
     private EditText etfInicio;
     private EditText etfSalida;
     private CheckBox cbReservada;
-    private HabitacionesClass habitacion;
+    private HabitacionesClass habitacion,habagregar;
     private DatabaseReference mDatabaseRef;
     private Button btnCrear;
-
+    private Button btnModificar;
+    private Button btnEliminar;
+    private ValueEventListener mDBListener;
     private FirebaseAuth fAuth;
+    private List<HabitacionesClass> mHabitaciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
+
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
 
         etNumero= findViewById(R.id.etNumero);
         etHuesped= findViewById(R.id.etHuesped);
@@ -44,9 +58,8 @@ public class FormularioActivity extends AppCompatActivity {
         etfSalida= findViewById(R.id.etfSalida);
         cbReservada= findViewById(R.id.cbReservada);
         btnCrear= findViewById(R.id.btnCrear);
-
-        fAuth= FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
+        btnModificar= findViewById(R.id.btnModificar);
+        btnEliminar= findViewById(R.id.btnEliminar);
 
         btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,4 +97,7 @@ public class FormularioActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

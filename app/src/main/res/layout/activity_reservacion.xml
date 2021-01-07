@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FormularioActivity">
+    tools:context=".ReservacionActivity">
 
     <GridLayout
         android:id="@+id/grid_titulo"
@@ -48,8 +48,8 @@
     <LinearLayout
         android:layout_width="390dp"
         android:layout_height="556dp"
-        android:orientation="vertical"
         android:layout_marginTop="20dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grid_titulo">
@@ -101,12 +101,6 @@
             android:text="Reservada" />
 
         <Button
-            android:id="@+id/btnCrear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Agregar" />
-
-        <Button
             android:id="@+id/btnModificar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,7 +111,7 @@
             android:id="@+id/btnEliminar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Eliminar Reservacion"
+            android:text="Terminar Reservacion"
             android:visibility="invisible" />
     </LinearLayout>
 

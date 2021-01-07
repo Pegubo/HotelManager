@@ -157,5 +157,23 @@
 
     </GridLayout>
 
+    <LinearLayout
+        android:id="@+id/Linear_footpage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Linear_subtitle"
+        android:layout_marginTop="198dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="logout"
+            android:text="Cerrar Sesión" />
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

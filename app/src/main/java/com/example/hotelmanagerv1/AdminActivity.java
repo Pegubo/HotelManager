@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class AdminActivity extends AppCompatActivity {
     CardView cHabitacion;
     CardView cNotificaciones;
@@ -27,5 +29,10 @@ public class AdminActivity extends AppCompatActivity {
     private void openHabitacionActivity() {
         Intent intent = new Intent(this, HabitacionActivity.class);
         startActivity(intent);
+    }
+    public void logout(View v){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        finish();
     }
 }
