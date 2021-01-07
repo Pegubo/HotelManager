@@ -84,9 +84,9 @@ public class FormularioActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(FormularioActivity.this,"Usuario Creado",Toast.LENGTH_SHORT).show();
+                            IrALista();
                         }else{
                             Toast.makeText(FormularioActivity.this,"Error al crear Usuario:" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
@@ -97,6 +97,11 @@ public class FormularioActivity extends AppCompatActivity {
                 Toast.makeText(FormularioActivity.this, "Fallo en la creacion: "+e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+    private void IrALista() {
+        Intent intent= new Intent(this, HabitacionActivity.class);
+        startActivity(intent);
+
     }
 
 

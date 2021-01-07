@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -93,7 +95,12 @@ public class ReservacionActivity extends AppCompatActivity {
                         habitacionMap.put("huesped",huesped);
                         habitacionMap.put("numero",habagregar.getNumero());
                         habitacionMap.put("reservada",true);
-                        mDatabaseRef.child(habagregar.getmKey()).updateChildren(habitacionMap);
+                        mDatabaseRef.child(habagregar.getmKey()).updateChildren(habitacionMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                IrALista();
+                            }
+                        });
                     }
                 });
             }
@@ -122,11 +129,22 @@ public class ReservacionActivity extends AppCompatActivity {
                         habitacionMap.put("huesped","");
                         habitacionMap.put("numero",habagregar.getNumero());
                         habitacionMap.put("reservada",false);
-                        mDatabaseRef.child(habagregar.getmKey()).updateChildren(habitacionMap);
+                        mDatabaseRef.child(habagregar.getmKey()).updateChildren(habitacionMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                IrALista();
+
+                            }
+                        });
+
                     }
                 });
             }
         }
     }
+    private void IrALista() {
+        Intent intent= new Intent(this, HabitacionActivity.class);
+        startActivity(intent);
 
+    }
 }

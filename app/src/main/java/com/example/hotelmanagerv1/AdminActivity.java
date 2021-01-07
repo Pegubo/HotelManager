@@ -25,9 +25,19 @@ public class AdminActivity extends AppCompatActivity {
                 openHabitacionActivity();
             }
         });
+        cNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNotificacionesActivity();
+            }
+        });
     }
     private void openHabitacionActivity() {
         Intent intent = new Intent(this, HabitacionActivity.class);
+        startActivity(intent);
+    }
+    private void openNotificacionesActivity() {
+        Intent intent = new Intent(this, NotificacionesActivity.class);
         startActivity(intent);
     }
     public void logout(View v){
