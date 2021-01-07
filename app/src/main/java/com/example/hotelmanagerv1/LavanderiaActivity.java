@@ -18,8 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LavanderiaActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
 
+public class LavanderiaActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabaseRef;
     private ServiciosClass servicioDisponible;
@@ -35,7 +37,6 @@ public class LavanderiaActivity extends AppCompatActivity {
 
         Bundle parametros = this.getIntent().getExtras();
         if(parametros !=null){
-
             servicioDisponible=(ServiciosClass) parametros.getSerializable("Servicio");
 
             if(servicioDisponible==null){
@@ -43,12 +44,40 @@ public class LavanderiaActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) { crearServicio(); }
                 });
+
+                /////////////////////////////////////////////////////////////////////
+
             }else{
-                if(servicioDisponible.isLavanderia()){
+
+                if(servicioDisponible.isLavanderia()) {
+
+                    btn_solicitar.setText("Cancelar Servicio");
+
                     btn_solicitar.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) { cancelarServicio(); }
+                        public void onClick(View v) {
+                            Map<String, Object> servicioMap= new HashMap<>();
+                            servicioMap.put("lavanderia",false);
+                            btn_solicitar.setText("Solicitar Servicio");
+                            v.requestLayout();
+                            mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
+
+                        }
                     });
+                }
+                else{
+
+                    btn_solicitar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Map<String, Object> servicioMap= new HashMap<>();
+                            servicioMap.put("lavanderia",true);
+                            btn_solicitar.setText("Cancelar Servicio");
+                            mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
+                            v.requestLayout();
+                        }
+                    });
+
                 }
             }
         }
@@ -72,7 +101,17 @@ public class LavanderiaActivity extends AppCompatActivity {
         });
     }
 
-    private void cancelarServicio(){
+    private void cambiarServicio(){
+        Map<String, Object> servicioMap= new HashMap<>();
+
+
+            servicioMap.put("lavanderia",false);
+
+            btn_solicitar.setText("Cancelar Servicio");
+            servicioMap.put("lavanderia",true);
+
+
+        mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
 
     }
 
