@@ -61,6 +61,7 @@ public class FormularioActivity extends AppCompatActivity {
                 etHuesped.getText().toString().trim(),etfInicio.getText().toString().trim(),etfSalida.getText().toString().trim()
                 ,cbReservada.isChecked());
         habitacion.setCorreo("habitacion"+habitacion.getNumero()+"@hotelmanager.com");
+
         mDatabaseRef.push().setValue(habitacion).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
