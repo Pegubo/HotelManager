@@ -21,7 +21,7 @@ public class NomolestarActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private ServiciosClass servicioDisponible;
     private Button btn_solicitar;
-
+    private HabitacionesClass nHabitacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class NomolestarActivity extends AppCompatActivity {
         Bundle parametros = this.getIntent().getExtras();
         if(parametros !=null){
             servicioDisponible=(ServiciosClass) parametros.getSerializable("Servicio");
-
+            nHabitacion=(HabitacionesClass) parametros.getSerializable("habitacion");
             if(servicioDisponible==null){
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -84,7 +84,7 @@ public class NomolestarActivity extends AppCompatActivity {
     }
 
     private void crearServicio() {
-        ServiciosClass serviciosDisponible=new ServiciosClass(servicioDisponible.getHabitacion(),false,false,true);
+        ServiciosClass serviciosDisponible=new ServiciosClass(nHabitacion.getNumero(),false,false,true);
 
         mDatabaseRef.push().setValue(serviciosDisponible).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

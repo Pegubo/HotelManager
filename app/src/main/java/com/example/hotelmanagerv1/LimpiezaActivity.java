@@ -29,6 +29,7 @@ public class LimpiezaActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private ServiciosClass servicioDisponible;
     private Button btn_solicitar;
+    private HabitacionesClass nHabitacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class LimpiezaActivity extends AppCompatActivity {
         Bundle parametros = this.getIntent().getExtras();
         if(parametros !=null){
             servicioDisponible=(ServiciosClass) parametros.getSerializable("Servicio");
-
+            nHabitacion=(HabitacionesClass) parametros.getSerializable("habitacion");
             if(servicioDisponible==null){
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -91,7 +92,7 @@ public class LimpiezaActivity extends AppCompatActivity {
     }
 
     private void crearServicio() {
-        ServiciosClass serviciosDisponible=new ServiciosClass(servicioDisponible.getHabitacion(),true,false,false);
+        ServiciosClass serviciosDisponible=new ServiciosClass(nHabitacion.getNumero(),true,false,false);
 
         mDatabaseRef.push().setValue(serviciosDisponible).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
