@@ -24,6 +24,8 @@ public class PedidosClass {
         this.completado = completado;
     }
 
+
+
     public int getHabitacion() {
         return habitacion;
     }
