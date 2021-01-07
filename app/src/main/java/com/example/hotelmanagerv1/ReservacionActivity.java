@@ -72,9 +72,9 @@ public class ReservacionActivity extends AppCompatActivity {
                 btnModificar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String huesped= etHuesped.toString().trim();
-                        String fInicio= etfInicio.toString().trim();
-                        String fSalida= etfSalida.toString().trim();
+                        String huesped= etHuesped.getText().toString().trim();
+                        String fInicio= etfInicio.getText().toString().trim();
+                        String fSalida= etfSalida.getText().toString().trim();
                         if(TextUtils.isEmpty(huesped)){
                             etHuesped.setError("Ingrese el Huesped.");
                             return;

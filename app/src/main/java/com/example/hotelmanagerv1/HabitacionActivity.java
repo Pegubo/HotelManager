@@ -1,6 +1,7 @@
 package com.example.hotelmanagerv1;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -113,7 +114,32 @@ public class HabitacionActivity extends AppCompatActivity {
                         }
                     });
                 }
+                row.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (habitacion.getReservada()){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(HabitacionActivity.this);
+                            builder.setTitle("Informacion de la habitacion "+habitacion.getNumero());
+                            builder.setMessage("Huesped:"+habitacion.getHuesped()+
+                                    "\n Fecha de Entrada:"+habitacion.getfInicio()+
+                                    "\n Fecha de Salida:"+habitacion.getfSalida());
+                            builder.setPositiveButton("Aceptar", null);
 
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                        else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(HabitacionActivity.this);
+                            builder.setTitle("Informacion de la habitacion "+habitacion.getNumero());
+                            builder.setMessage("Sin reservacion");
+                            builder.setPositiveButton("Aceptar", null);
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+
+                    }
+                });
                 //row.addView(pos);
                 row.addView(numero);
                 row.addView(Reservada);

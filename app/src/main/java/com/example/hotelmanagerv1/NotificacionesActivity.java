@@ -256,9 +256,9 @@ public class NotificacionesActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(NotificacionesActivity.this);
                         builder.setTitle("Pedido de la habitacion "+ped.getHabitacion());
                         builder.setMessage("Almohadas:"+ped.getAlmohadas()+
-                                " Jabones:"+ped.getJabon()+
-                                " Toallas:"+ped.getToallas()+
-                                " Papel:"+ped.getPapel());
+                                "\nJabones:"+ped.getJabon()+
+                                "\nToallas:"+ped.getToallas()+
+                                "\nPapel:"+ped.getPapel());
                         builder.setPositiveButton("Aceptar", null);
 
                         AlertDialog dialog = builder.create();
