@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class NotificacionesActivity extends AppCompatActivity {
-    private TableLayout tServicios, tPedidos;
+    private TableLayout tServicios, tPedidos, tProblemas;
     private DatabaseReference mDatabaseRefPed;
     private DatabaseReference mDatabaseRefSer;
     private ValueEventListener mDBListener;
@@ -73,6 +73,31 @@ public class NotificacionesActivity extends AppCompatActivity {
         });
 /////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////Pedidos////////////
+        mDatabaseRefPed = FirebaseDatabase.getInstance().getReference("pedidos");
+        mPedidos= new ArrayList<>();
+
+        readData(mDatabaseRefPed, new OnGetDataListener() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                mPedidos.clear();
+                for (DataSnapshot postSnapShot : dataSnapshot.getChildren()){
+                    PedidosClass ped = postSnapShot.getValue(PedidosClass.class);
+                    ped.setKey(postSnapShot.getKey());
+                    mPedidos.add(ped);
+                }
+                createTablePedidos();
+            }
+            @Override
+            public void onStart() {
+                //whatever you need to do onStart
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+        //////////Problemas//////////////////////
         mDatabaseRefPed = FirebaseDatabase.getInstance().getReference("pedidos");
         mPedidos= new ArrayList<>();
 
@@ -199,6 +224,90 @@ public class NotificacionesActivity extends AppCompatActivity {
         }
     }
     private void createTablePedidos(){
+        if(!mPedidos.isEmpty()){
+            int i=0;
+            for (PedidosClass ped: mPedidos){
+                TableRow row= new TableRow(this);
+                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                row.setLayoutParams(lp);
+                TextView habitacion = new TextView(this);
+                TextView almohadas = new TextView(this);
+                TextView jabon = new TextView(this);
+                TextView papel = new TextView(this);
+                TextView toallas = new TextView(this);
+                CheckBox completado= new CheckBox(this);
+                Button btnSelect = new Button(this);
+
+                //pos.setText(i);
+                habitacion.setText("Habitacion "+ped.getHabitacion());
+                almohadas.setText("Almohadas: "+ped.getAlmohadas());
+                almohadas.setEnabled(false);
+                jabon.setText("Jabon: "+ped.getJabon());
+                jabon.setEnabled(false);
+                papel.setText("Papel: "+ped.getPapel());
+                papel.setEnabled(false);
+                toallas.setText("Toallas: "+ped.getToallas());
+                toallas.setEnabled(false);
+                //completado.setText("Completado");
+                completado.setText("Estado");
+                completado.setChecked(ped.isCompletado());
+                completado.setEnabled(false);
+                if(ped.isCompletado()){
+                    btnSelect.setText("Completado");
+                    btnSelect.setEnabled(false);
+                }
+                else{
+                    btnSelect.setText("Completar");
+                    btnSelect.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //Toast.makeText(NotificacionesActivity.this, "Agregar", Toast.LENGTH_SHORT).show();
+                            Map<String, Object> PedidosMap= new HashMap<>();
+                            PedidosMap.put("completado",true);
+                            mDatabaseRefPed.child(ped.getKey()).updateChildren(PedidosMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(NotificacionesActivity.this, "Pedido Completado", Toast.LENGTH_SHORT).show();
+                                    Refrescar();
+                                }
+                            });
+
+                        }
+                    });
+                }
+                row.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NotificacionesActivity.this);
+                        builder.setTitle("Pedido de la habitacion "+ped.getHabitacion());
+                        builder.setMessage("Almohadas:"+ped.getAlmohadas()+
+                                "\nJabones:"+ped.getJabon()+
+                                "\nToallas:"+ped.getToallas()+
+                                "\nPapel:"+ped.getPapel());
+                        builder.setPositiveButton("Aceptar", null);
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
+                //row.addView(pos);
+                row.addView(habitacion);
+                /*row.addView(almohadas);
+                row.addView(jabon);
+                row.addView(papel);
+                row.addView(toallas);*/
+                row.addView(completado);
+                row.addView(btnSelect);
+
+                tPedidos.addView(row,i);
+                i++;
+            }
+        }
+        else{
+            Toast.makeText(this, "No hay habitaciones disponibles para mostrar", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void createTableProblemas(){
         if(!mPedidos.isEmpty()){
             int i=0;
             for (PedidosClass ped: mPedidos){
