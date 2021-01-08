@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Historial del Pedidos"
+            android:text="Historial del Pedidos Completados"
             android:textSize="20sp" />
 
         <ImageView
