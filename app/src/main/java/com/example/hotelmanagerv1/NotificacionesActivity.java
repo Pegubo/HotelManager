@@ -1,13 +1,12 @@
 package com.example.hotelmanagerv1;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TableLayout;
@@ -22,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +30,14 @@ public class NotificacionesActivity extends AppCompatActivity {
     private TableLayout tServicios, tPedidos, tProblemas;
     private DatabaseReference mDatabaseRefPed;
     private DatabaseReference mDatabaseRefSer;
+    private DatabaseReference mDatabaseRefProb;
     private ValueEventListener mDBListener;
     private List<ServiciosClass> mServicios;
     private List<PedidosClass> mPedidos;
+    private List<ReporteClass> mProblemas;
     private ServiciosClass nServicio;
     private PedidosClass nPedidos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +45,7 @@ public class NotificacionesActivity extends AppCompatActivity {
 
         tServicios= findViewById(R.id.tabla_servicios);
         tPedidos= findViewById(R.id.tabla_pedidos);
+        tProblemas= findViewById(R.id.tabla_problemas);
 
         ///////////Servicios///////////
         mDatabaseRefSer = FirebaseDatabase.getInstance().getReference("servicios");
@@ -98,19 +99,19 @@ public class NotificacionesActivity extends AppCompatActivity {
             }
         });
         //////////Problemas//////////////////////
-        mDatabaseRefPed = FirebaseDatabase.getInstance().getReference("pedidos");
-        mPedidos= new ArrayList<>();
+        mDatabaseRefProb = FirebaseDatabase.getInstance().getReference("problemas");
+        mProblemas= new ArrayList<>();
 
-        readData(mDatabaseRefPed, new OnGetDataListener() {
+        readData(mDatabaseRefProb, new OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                mPedidos.clear();
+                mProblemas.clear();
                 for (DataSnapshot postSnapShot : dataSnapshot.getChildren()){
-                    PedidosClass ped = postSnapShot.getValue(PedidosClass.class);
-                    ped.setKey(postSnapShot.getKey());
-                    mPedidos.add(ped);
+                    ReporteClass rep = postSnapShot.getValue(ReporteClass.class);
+                    rep.setKey(postSnapShot.getKey());
+                    mProblemas.add(rep);
                 }
-                createTablePedidos();
+                createTableProblemas();
             }
             @Override
             public void onStart() {
@@ -308,82 +309,25 @@ public class NotificacionesActivity extends AppCompatActivity {
         }
     }
     private void createTableProblemas(){
-        if(!mPedidos.isEmpty()){
+        if(!mProblemas.isEmpty()){
             int i=0;
-            for (PedidosClass ped: mPedidos){
+            for (ReporteClass rep: mProblemas){
                 TableRow row= new TableRow(this);
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
                 TextView habitacion = new TextView(this);
-                TextView almohadas = new TextView(this);
-                TextView jabon = new TextView(this);
-                TextView papel = new TextView(this);
-                TextView toallas = new TextView(this);
-                CheckBox completado= new CheckBox(this);
+                TextView problema = new TextView(this);
                 Button btnSelect = new Button(this);
 
                 //pos.setText(i);
-                habitacion.setText("Habitacion "+ped.getHabitacion());
-                almohadas.setText("Almohadas: "+ped.getAlmohadas());
-                almohadas.setEnabled(false);
-                jabon.setText("Jabon: "+ped.getJabon());
-                jabon.setEnabled(false);
-                papel.setText("Papel: "+ped.getPapel());
-                papel.setEnabled(false);
-                toallas.setText("Toallas: "+ped.getToallas());
-                toallas.setEnabled(false);
-                //completado.setText("Completado");
-                completado.setText("Estado");
-                completado.setChecked(ped.isCompletado());
-                completado.setEnabled(false);
-                if(ped.isCompletado()){
-                    btnSelect.setText("Completado");
-                    btnSelect.setEnabled(false);
-                }
-                else{
-                    btnSelect.setText("Completar");
-                    btnSelect.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Toast.makeText(NotificacionesActivity.this, "Agregar", Toast.LENGTH_SHORT).show();
-                            Map<String, Object> PedidosMap= new HashMap<>();
-                            PedidosMap.put("completado",true);
-                            mDatabaseRefPed.child(ped.getKey()).updateChildren(PedidosMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(NotificacionesActivity.this, "Pedido Completado", Toast.LENGTH_SHORT).show();
-                                    Refrescar();
-                                }
-                            });
+                habitacion.setText("Habitacion "+rep.getHabitacion());
+                problema.setText(rep.getReporte());
+                problema.setEnabled(false);
 
-                        }
-                    });
-                }
-                row.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(NotificacionesActivity.this);
-                        builder.setTitle("Pedido de la habitacion "+ped.getHabitacion());
-                        builder.setMessage("Almohadas:"+ped.getAlmohadas()+
-                                "\nJabones:"+ped.getJabon()+
-                                "\nToallas:"+ped.getToallas()+
-                                "\nPapel:"+ped.getPapel());
-                        builder.setPositiveButton("Aceptar", null);
-
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                });
                 //row.addView(pos);
                 row.addView(habitacion);
-                /*row.addView(almohadas);
-                row.addView(jabon);
-                row.addView(papel);
-                row.addView(toallas);*/
-                row.addView(completado);
-                row.addView(btnSelect);
-
-                tPedidos.addView(row,i);
+                row.addView(problema);
+                tProblemas.addView(row,i);
                 i++;
             }
         }
@@ -414,6 +358,10 @@ public class NotificacionesActivity extends AppCompatActivity {
     }
     private void Refrescar(){
         Intent i= new Intent(this, NotificacionesActivity.class);
+        startActivity(i);
+    }
+    private void Home(){
+        Intent i= new Intent(this, AdminActivity.class);
         startActivity(i);
     }
 }

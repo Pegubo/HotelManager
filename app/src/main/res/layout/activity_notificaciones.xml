@@ -126,6 +126,30 @@
 
                 <TableRow
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/tv_subtitle4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="Problemas"
+                android:textSize="18sp" />
+
+            <TableLayout
+                android:id="@+id/tabla_problemas"
+                android:layout_width="367dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:stretchColumns="2dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </TableLayout>
         </LinearLayout>

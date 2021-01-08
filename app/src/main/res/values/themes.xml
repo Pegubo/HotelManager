@@ -2,10 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.HotelManagerV1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">#A9A9A9</item>
         <item name="colorPrimaryVariant">#4D4D4E</item>
         <item name="colorOnPrimary">#474545</item>
-        <!-- Secondary brand color. -->
+        <!-- Secondary brand color. #4D4D4E -->
         <item name="colorSecondary">#9DA1A1</item>
         <item name="colorSecondaryVariant">#848E8E</item>
         <item name="colorOnSecondary">@color/black</item>
