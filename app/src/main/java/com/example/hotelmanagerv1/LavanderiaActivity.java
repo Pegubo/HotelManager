@@ -50,7 +50,6 @@ public class LavanderiaActivity extends AppCompatActivity {
                     }
                 });
 
-
             }else{
 
                 if(servicioDisponible.isLavanderia()) {

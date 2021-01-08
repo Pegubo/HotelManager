@@ -53,10 +53,10 @@ public class HistorialActivity extends AppCompatActivity {
                     pedido=postSnapShot.getValue(PedidosClass.class);
                     if(pedido.getHabitacion()==nHabitacion.getNumero() && pedido.isCompletado()==true) {
                         pedidos.add("Habitacion #" + Integer.toString(pedido.getHabitacion()) +
-                                "    Almohadas: " + Integer.toString(pedido.getAlmohadas()) +
-                                "    Toallas:   " + Integer.toString(pedido.getToallas()) +
-                                "    Papel:     " + Integer.toString(pedido.getPapel()) +
-                                "    Jabón      " + Integer.toString(pedido.getJabon()));
+                                " Almohadas: " + Integer.toString(pedido.getAlmohadas()) +
+                                " Toallas:   " + Integer.toString(pedido.getToallas()) +
+                                " Papel:     " + Integer.toString(pedido.getPapel()) +
+                                " Jabón      " + Integer.toString(pedido.getJabon()));
                     }
                 }
                 lista_pedidos.setAdapter(adapter);

@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_Productos:
                 i=new Intent(this, PedidosActivity.class);
+                i.putExtras(extras);
                 startActivity(i);
                 break;
 
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_historial:
                 i=new Intent(this, HistorialActivity.class);
+                i.putExtras(extras);
                 startActivity(i);
                 break;
 
