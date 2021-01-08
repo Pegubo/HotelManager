@@ -22,7 +22,6 @@ import java.util.List;
 
 public class HistorialActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private ListView lista_pedidos;
     private FirebaseDatabase database;
     private DatabaseReference Ref_pedidos;

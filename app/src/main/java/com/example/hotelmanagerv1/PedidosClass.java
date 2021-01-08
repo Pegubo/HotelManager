@@ -14,7 +14,6 @@ public class PedidosClass {
 
     }
 
-
     public PedidosClass(int habitacion, int almohadas, int toallas, int papel, int jabon, boolean completado) {
         this.habitacion = habitacion;
         this.almohadas = almohadas;
@@ -23,8 +22,6 @@ public class PedidosClass {
         this.jabon = jabon;
         this.completado = completado;
     }
-
-
 
     public int getHabitacion() {
         return habitacion;

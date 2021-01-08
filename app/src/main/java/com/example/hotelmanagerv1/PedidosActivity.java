@@ -114,7 +114,7 @@ public class PedidosActivity extends AppCompatActivity {
 
     private void crearServicio(){
         ServiciosClass servicioDisponible=new ServiciosClass(nHabitacion.getNumero(),false,false,false);
-        Ref_pedidos.push().setValue(servicioDisponible).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Ref_servicios.push().setValue(servicioDisponible).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(PedidosActivity.this, "SERVICIO HABILITADO", Toast.LENGTH_LONG).show();

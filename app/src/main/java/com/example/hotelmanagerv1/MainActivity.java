@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_problema:
                 i=new Intent(this, ReporteActivity.class);
+                i.putExtras(extras);
                 startActivity(i);
                 break;
         }
