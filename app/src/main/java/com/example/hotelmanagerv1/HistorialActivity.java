@@ -51,7 +51,7 @@ public class HistorialActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapShot : snapshot.getChildren()){
                     pedido=postSnapShot.getValue(PedidosClass.class);
-                    if(pedido.getHabitacion()==nHabitacion.getNumero()) {
+                    if(pedido.getHabitacion()==nHabitacion.getNumero() && pedido.isCompletado()==true) {
                         pedidos.add("Habitacion #" + Integer.toString(pedido.getHabitacion()) +
                                 "    Almohadas: " + Integer.toString(pedido.getAlmohadas()) +
                                 "    Toallas:   " + Integer.toString(pedido.getToallas()) +

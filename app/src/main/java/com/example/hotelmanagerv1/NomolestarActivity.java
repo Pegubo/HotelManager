@@ -1,5 +1,6 @@
 package com.example.hotelmanagerv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ public class NomolestarActivity extends AppCompatActivity {
     private ServiciosClass servicioDisponible;
     private Button btn_solicitar;
     private HabitacionesClass nHabitacion;
+    private Map<String, Object> servicioMap= new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,31 +36,31 @@ public class NomolestarActivity extends AppCompatActivity {
         if(parametros !=null){
             servicioDisponible=(ServiciosClass) parametros.getSerializable("Servicio");
             nHabitacion=(HabitacionesClass) parametros.getSerializable("habitacion");
+
             if(servicioDisponible==null){
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) { crearServicio(); }
+                    public void onClick(View v) {
+                        crearServicio();
+                        IraMain();}
                 });
-
-                /////////////////////////////////////////////////////////////////////
 
             }else{
 
                 if(servicioDisponible.isNo_molestar()) {
 
                     btn_solicitar.setText("Cancelar Servicio");
-
                     btn_solicitar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Map<String, Object> servicioMap= new HashMap<>();
-                            servicioMap.put("no_molestar",false);
-                            servicioMap.put("limpieza",servicioDisponible.isLimpieza());
-                            servicioMap.put("lavanderia",servicioDisponible.isLavanderia());
-                            mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
-                            btn_solicitar.setText("Solicitar Servicio");
-                            v.requestLayout();
 
+                            servicioMap.put("no_molestar",false);
+                            //servicioMap.put("limpieza",servicioDisponible.isLimpieza());
+                            //servicioMap.put("lavanderia",servicioDisponible.isLavanderia());
+                            mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
+                            Toast.makeText(NomolestarActivity.this, "desactivar modo No molestar ", Toast.LENGTH_SHORT).show();
+                            btn_solicitar.setText("Solicitar Servicio");
+                            IraMain();
                         }
                     });
                 }
@@ -67,13 +69,14 @@ public class NomolestarActivity extends AppCompatActivity {
                     btn_solicitar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Map<String, Object> servicioMap= new HashMap<>();
+
                             servicioMap.put("no_molestar",true);
                             servicioMap.put("limpieza",false);
                             servicioMap.put("lavanderia",false);
                             mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
+                            Toast.makeText(NomolestarActivity.this, "activar modo No molestar ", Toast.LENGTH_SHORT).show();
                             btn_solicitar.setText("Cancelar Servicio");
-                            v.requestLayout();
+                            IraMain();
                         }
                     });
 
@@ -98,6 +101,10 @@ public class NomolestarActivity extends AppCompatActivity {
                 Toast.makeText(NomolestarActivity.this, "Fallo en la creacion: "+e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+    private void IraMain(){
+        Intent i= new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.hotelmanagerv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +47,11 @@ public class LimpiezaActivity extends AppCompatActivity {
             if(servicioDisponible==null){
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) { crearServicio(); }
+                    public void onClick(View v) {
+                        crearServicio();
+                        IraMain();
+                    }
+
                 });
 
                 /////////////////////////////////////////////////////////////////////
@@ -54,19 +59,17 @@ public class LimpiezaActivity extends AppCompatActivity {
             }else{
 
                 if(servicioDisponible.isLimpieza()) {
-
                     btn_solicitar.setText("Cancelar Servicio");
-
                     btn_solicitar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Map<String, Object> servicioMap= new HashMap<>();
                             servicioMap.put("limpieza",false);
-                            servicioMap.put("lavanderia",servicioDisponible.isLavanderia());
-                            servicioMap.put("no_molestar",servicioDisponible.isNo_molestar());
+                            //servicioMap.put("lavanderia",servicioDisponible.isLavanderia());
+                            //servicioMap.put("no_molestar",servicioDisponible.isNo_molestar());
                             mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
                             btn_solicitar.setText("Solicitar Servicio");
-                            v.requestLayout();
+                            IraMain();
                         }
                     });
                 }
@@ -77,11 +80,11 @@ public class LimpiezaActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Map<String, Object> servicioMap= new HashMap<>();
                             servicioMap.put("limpieza",true);
-                            servicioMap.put("lavanderia",servicioDisponible.isLavanderia());
+                            //servicioMap.put("lavanderia",servicioDisponible.isLavanderia());
                             servicioMap.put("no_molestar",false);
                             mDatabaseRef.child(servicioDisponible.getKey()).updateChildren(servicioMap);
                             btn_solicitar.setText("Cancelar Servicio");
-                            v.requestLayout();
+                            IraMain();
                         }
                     });
 
@@ -106,6 +109,11 @@ public class LimpiezaActivity extends AppCompatActivity {
                 Toast.makeText(LimpiezaActivity.this, "Fallo en la creacion: "+e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void IraMain(){
+        Intent i= new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 }

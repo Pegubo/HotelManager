@@ -62,26 +62,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent i;
+        Bundle extras= new Bundle();
+        extras.putSerializable("Servicio",serviciosDisponibles);
+        extras.putSerializable("habitacion",nHabitacion);
 
         switch (v.getId()){
 
-
-
             case R.id.cv_Lavanderia:
             i=new Intent(this, LavanderiaActivity.class);
-            Bundle extras= new Bundle();
-            extras.putSerializable("Servicio",serviciosDisponibles);
-            extras.putSerializable("habitacion",nHabitacion);
             i.putExtras(extras);
             startActivity(i);
             break;
 
             case R.id.cv_Limpieza:
                 i=new Intent(this, LimpiezaActivity.class);
-                Bundle extras1= new Bundle();
-                extras1.putSerializable("Servicio",serviciosDisponibles);
-                extras1.putSerializable("habitacion",nHabitacion);
-                i.putExtras(extras1);
+                i.putExtras(extras);
                 startActivity(i);
                 break;
 
@@ -92,10 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.cv_noMolestar:
                 i=new Intent(this, NomolestarActivity.class);
-                Bundle extra= new Bundle();
-                extra.putSerializable("Servicio",serviciosDisponibles);
-                extra.putSerializable("habitacion",nHabitacion);
-                i.putExtras(extra);
+                i.putExtras(extras);
                 startActivity(i);
                 break;
 
