@@ -50,6 +50,7 @@ public class FormularioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("habitaciones");
+        fAuth=FirebaseAuth.getInstance();
 
         etNumero= findViewById(R.id.etNumero);
         etHuesped= findViewById(R.id.etHuesped);
@@ -79,7 +80,10 @@ public class FormularioActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(FormularioActivity.this, "Creacion de la habitacion Exitosa", Toast.LENGTH_LONG).show();
-                fAuth.createUserWithEmailAndPassword(habitacion.getCorreo().toString().trim(),habitacion.getContra().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                String correo, contra;
+                correo= habitacion.getCorreo().toString().trim();
+                contra= habitacion.getContra().toString().trim();
+                fAuth.createUserWithEmailAndPassword(correo,contra).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
